@@ -1,404 +1,223 @@
-[![Actions](https://github.com/locize/i18next-locize-backend/workflows/node/badge.svg)](https://github.com/locize/i18next-locize-backend/actions?query=workflow%3Anode)
-[![Travis](https://img.shields.io/travis/locize/i18next-locize-backend/master.svg?style=flat-square)](https://travis-ci.org/locize/i18next-locize-backend)
-[![npm version](https://img.shields.io/npm/v/i18next-locize-backend.svg?style=flat-square)](https://www.npmjs.com/package/i18next-locize-backend)
-[![David](https://img.shields.io/david/locize/i18next-locize-backend.svg?style=flat-square)](https://david-dm.org/locize/i18next-locize-backend)
+# React Native Template
 
-This is an [i18next backend plugin](https://www.i18next.com/principles/plugins) to be used for [locize](http://locize.com) service. It will load resources from locize server using http fetch or xhr as fallback.
+[![Moove It](https://circleci.com/gh/moove-it/react-native-template.svg?style=svg)](https://app.circleci.com/pipelines/github/moove-it/react-native-template?branch=master)
 
-If you're not familiar with i18next and how i18next backend plugins works, please first have a look at the [i18next documentation](https://www.i18next.com/how-to/add-or-load-translations#load-using-a-backend-plugin).
+This project aims to be a strong foundation for react-native applications. It provides a clear and organized structure, core dependencies, and boilerplate to jumpstart development.
 
-It will allow you to save missing keys containing both **default value** and **context information** by calling:
+## Prerequisites
 
-```js
-i18next.t(key, defaultValue, tDescription);
-i18next.t(key, { defaultValue, tDescription });
-```
+- [Node.js > 12](https://nodejs.org) and npm (Recommended: Use [nvm](https://github.com/nvm-sh/nvm))
+- [Watchman](https://facebook.github.io/watchman)
+- [Xcode 12](https://developer.apple.com/xcode)
+- [Cocoapods 1.10.1](https://cocoapods.org)
+- [JDK > 11](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
+- [Android Studio and Android SDK](https://developer.android.com/studio)
 
-## Advice:
+## Base dependencies
 
-To see i18next-locize-backend in a working app example, you may have a look at:
+- [axios](https://github.com/axios/axios) for networking.
+- [prop-types](https://github.com/facebook/prop-types) to type-check our components exposed properties.
+- [react-native-config](https://github.com/luggit/react-native-config) to manage envionments.
+- [react-navigation](https://reactnavigation.org/) navigation library.
+- [react-native-localization](https://github.com/stefalda/ReactNativeLocalization) for string localization.
+- [react-native-mmkv-storage](https://github.com/ammarahm-ed/react-native-mmkv-storage#readme) as storage solution.
+- [redux](https://redux.js.org/) for state management.
+- [redux-persist](https://github.com/rt2zz/redux-persist) as persistance layer.
+- [redux-thunk](https://github.com/gaearon/redux-thunk) to dispatch asynchronous actions.
+- [jest](https://facebook.github.io/jest/) and [react-native-testing-library](https://callstack.github.io/react-native-testing-library/) for testing.
 
-- [this react-tutorial](https://github.com/locize/react-tutorial) starting from [Step 2](https://github.com/locize/react-tutorial#step-2---use-the-locize-cdn)
-- [this guide](https://locize.com/blog/how-to-internationalize-react-i18next) starting from the step of [replacing i18next-http-backend with i18next-locize-backend](https://locize.com/blog/how-to-internationalize-react-i18next/#how-look)
-- [this Angular blog post](https://locize.com/blog/unleash-the-full-power-of-angular-i18next) [introducing i18next-locize-backend](https://locize.com/blog/unleash-the-full-power-of-angular-i18next/#how-look)
-- [the code integration part](https://www.youtube.com/watch?v=ds-yEEYP1Ks&t=423s) in this [YouTube video](https://www.youtube.com/watch?v=ds-yEEYP1Ks)
+## Usage
 
-# Troubleshooting
+#### Use Template button
 
-Make sure you set the `debug` option of i18next to `true`. This will maybe log more information in the developer console.
+Click the "Use this template" button above the file list, then use the Owner drop-down menu, and select the account you want to own the repository. Creating a repository from a template has the following advantages:
 
-**SaveMissing is not working**
+- A repository created from a template starts with a single commit.
+- Commits to a repository created from a template do appear in your contribution graph.
+- Creating a repository from a template starts a new project quickly.
 
-Did you wait 5-10 seconds before refreshing the locize UI? It may take a couple of seconds until the missing keys are sent and saved.
+### Option 1: Using React-Native-Rename
 
-Per default only `localhost` is allowed to send missing keys ([or update missing keys](https://www.i18next.com/overview/configuration-options#missing-keys)) (to avoid using this feature accidentally [in production](https://docs.locize.com/guides-tips-and-tricks/going-production)). If you're not using `localhost` during development you will have to set the `allowedAddOrUpdateHosts: ['your.domain.tld']` for the [backend options](https://github.com/locize/i18next-locize-backend#backend-options).
+You can start by cloning this repository and using [react-native-rename](https://github.com/junedomingo/react-native-rename). In the current state of this project, it should give you no issues at all, just run the script, delete your node modules and reinstall them and you should be good to go.
 
+Keep in mind that this library can cause trouble if you are renaming a project that uses `Pods` on the iOS side.
 
-**Loading translations not working**
+After that you should proceed as with any javascript project:
 
-Make sure the translations are published, either by having enabled auto publishing for your version or by [manually publishing](https://docs.locize.com/more/general-questions/how-to-manually-publish-a-specific-version) the version. Alternatively, you can publish via [CLI](https://github.com/locize/locize-cli#publish-version) or directly by consuming the [API](https://docs.locize.com/integration/api#publish-version).
+- Go to your project's root folder and run `npm install`.
+- If you are using Xcode 12.5 or higher got to /ios and execute `pod install --`repo-update`
+- Run `npm run ios` or `npm run android` to start your application!
 
-In case you're using the private publish mode, make sure you're using the correct api key and are setting the `private` option to `true`.
+(Using yarn: `yarn ios` or `yarn android`)
 
-```javascript
-import i18next from "i18next";
-import Locize from "i18next-locize-backend";
+Note: Please read the Setup environments section that is below in this file for more information about the execution scripts.
 
-i18next.use(Locize).init({
-  backend: {
-    projectId: "[PROJECTID]",
-    apiKey: "[APIKEY]",
-    version: "[VERSION]",
-    private: true,
-    referenceLng: "en"
-  }
-});
-```
+### Option 2: Copy the structure to your project
 
+If you want to roll on your own and don't want to use this as a template, you can create your project and then copy the `/src` folder (which has all the code of your application) and update your `index.js`.
 
-**On server side: process is not exiting**
+Keep in mind that if you do this, you'll have to **install and link** all dependencies (as well as adding all the necessary native code for each library that requires it).
 
-In case you want to use i18next-locize-backend on server side for a short running process, you might want to set the `reloadInterval` option to `false`:
+## Folder structure
 
-```javascript
-{
-  reloadInterval: false,
-  projectId: "[PROJECTID]",
-  version: 'latest',
-  referenceLng: 'en',
-}
-```
+This template follows a very simple project structure:
 
-# Getting started
+- `src`: This folder is the main container of all the code inside your application.
+  - `actions`: This folder contains all actions that can be dispatched to redux.
+  - `assets`: Asset folder to store all images, vectors, etc.
+  - `components`: Folder to store any common component that you use through your app (such as a generic button)
+  - `constants`: Folder to store any kind of constant that you have.
+  - `controllers`: Folder to store all your network logic (you should have one controller per resource).
+  - `localization`: Folder to store the languages files.
+  - `navigation`: Folder to store the navigators.
+  - `reducers`: This folder should have all your reducers, and expose the combined result using its `index.js`
+  - `screens`: Folder that contains all your application screens/features.
+    - `Screen`: Each screen should be stored inside its folder and inside it a file for its code and a separate one for the styles and tests.
+      - `Screen.js`
+      - `Screen.styles.js`
+      - `Screen.test.js`
+  - `selectors`: Folder to store your selectors for each reducer.
+  - `storage`: Folder that contains the application storage logic.
+  - `store`: Folder to put all redux middlewares and the store.
+  - `test-utils`: Folder to store tests-related utilities and components.
+  - `theme`: Folder to store all the styling concerns related to the application theme.
+  - `App.js`: Main component that starts your whole app.
+  - `index.js`: Entry point of your application as per React-Native standards.
 
-Source can be loaded via [npm](https://www.npmjs.com/package/i18next-locize-backend), `yarn`, `bower` or [downloaded](https://cdn.rawgit.com/locize/i18next-locize-backend/master/i18nextLocizeBackend.min.js) from this repo.
+## Splash screen customization
 
-```bash
-# npm package
-$ npm install i18next-locize-backend
+To customize the splash screen (logo and background color) use the CLI provided in the [official docs](https://github.com/zoontek/react-native-bootsplash#assets-generation).
 
-# yarn
-$ yarn add i18next-locize-backend
+## Setup environments
 
-# bower
-$ bower install i18next-locize-backend
-```
+### Using scripts from console
 
-Wiring up:
+The template already has scripts to execute the project calling a specific environment defined into the package.json file. Keep in mind that if you are going to create new `envs` you have to define the script to build the project properly.
 
-```js
-import i18next from 'i18next';
-import Locize from 'i18next-locize-backend';
-// or
-const i18next = require('i18next');
-const Locize = require('i18next-locize-backend');
+To define which env you want to use, just keep the structure `yarn [platform]: [environment]`
 
-i18next.use(Locize).init(i18nextOptions);
-```
 
-for Deno:
+DEV: `yarn ios` or `yarn android`
 
-```js
-import i18next from 'https://deno.land/x/i18next/index.js'
-import Backend from 'https://deno.land/x/i18next_locize_backend/index.js'
+STG: `yarn ios:staging` or `yarn android:staging`
 
-i18next.use(Backend).init(i18nextOptions);
-```
+PROD: `yarn ios:prod` o `yarn android:prod`
 
-- As with all modules you can either pass the constructor function (class) to the i18next.use or a concrete instance.
-- If you don't use a module loader it will be added to `window.i18nextLocizeBackend`
+Also, you can use npm following the same rule as before: `npm run ios:staging`
 
-## Backend Options
+Modify the environment variables files in root folder (`.env.development`, `.env.production` and `.env.staging`)
 
-**IMPORTANT** make sure you do not add your apiKey in the production build to avoid misuse by strangers
-
-```js
-{
-  // the id of your locize project
-  projectId: '[PROJECTID]',
-
-  // add an api key if you want to send missing keys
-  apiKey: '[APIKEY]',
-
-  // the reference language of your project
-  referenceLng: '[LNG]',
-
-  // version - defaults to latest
-  version: '[VERSION]',
-
-  // private - set to true if you version on locize is set to use private publish
-  private: false,
-
-  // hostnames that are allowed to create, update keys
-  // please keep those to your local system, staging, test servers (not production)
-  // can be array of allowed hosts or a function (hostname) => { return true; // or false if not allowed }
-  allowedAddOrUpdateHosts: ['localhost'],
-
-  // optional event triggered on saved to backend
-  onSaved: (lng, ns) => { ... },
-
-  // can be used to reload resources in a specific interval (useful in server environments)
-  reloadInterval: typeof window !== 'undefined' ? false : 60 * 60 * 1000,
-  
-  // define the threshold for languages to be added to supportedLngs (eg: 1 = 100% translated, 0.9 = 90% translated [default]).
-  translatedPercentageThreshold: 0.8,
-
-  // define a custom request function
-  // can be used to support Angular http client
-  //
-  // 'info' contains 'url', 'method', 'body' and 'headers'
-  //   'url' the url that should be requested
-  //   'method' GET for fetching translations and POST for saving missing translations
-  //   'body' will be a key:value object used when saving missing translations
-  //   'headers' will be a key:value object containing the header information that should be sent
-  // 'callback' is a function that takes two parameters, 'err' and 'res'.
-  //            'err' should be an error
-  //            'res' should be an object with a 'status' property and a 'data' property containing a stringified object instance beeing the key:value translation pairs for the
-  //            requested language and namespace, or null in case of an error.
-  request: function (info, callback) {},
-  // or async / promise
-  //request: async (info) {},
-}
-```
-
-To load translations only `projectId` needs to be filled. To use the **saveMissing** feature of i18next additional to the projectId both `apiKey` and `referenceLng` have to be set.
-
-Options can be passed in:
-
-**preferred** - by setting options.backend in i18next.init:
-
-```js
-import i18next from "i18next";
-import Locize from "i18next-locize-backend";
-
-i18next.use(Locize).init({
-  backend: options
-});
-```
-
-on construction:
-
-```js
-import Locize from "i18next-locize-backend";
-const locize = new Locize(options);
-```
-
-via calling init:
-
-```js
-import Locize from "i18next-locize-backend";
-const locize = new Locize();
-locize.init(options);
-```
-
-## Additional API endpoints
-
-### backend.getLanguages
-
-Will return a list of all languages in your project including percentage of translations done per version.
-
-```js
-import Locize from "i18next-locize-backend";
-const locize = new Locize(options);
-
-locize.getLanguages((err, data) => {
-  /*
-  data is:
-
-  {
-    "en": {
-      "name": "English",
-      "nativeName": "English",
-      "isReferenceLanguage": true,
-      "translated": {
-        "latest": 1
-      }
-    },
-    "de": {
-      "name": "German",
-      "nativeName": "Deutsch",
-      "isReferenceLanguage": false,
-      "translated": {
-        "latest": 0.9
-      }
-    }
-  }
-  */
-});
-
-// or
-const data = await locize.getLanguages();
-
-// or
-i18next.services.backendConnector.backend.getLanguages(callback);
-
-// or
-const data = await i18next.services.backendConnector.backend.getLanguages();
-```
-
-### backend.getOptions
-
-Will return an object containing useful informations for the i18next init options.
-
-```js
-import Locize from "i18next-locize-backend";
-const locize = new Locize(options);
-
-locize.getOptions((err, data) => {
-  /*
-  data is:
-
-  {
-    fallbackLng: 'en',
-    referenceLng: 'en',
-    supportedLngs: ['en', 'de'],
-    load: 'languageOnly|all' // depending on your supportedLngs has locals having region like en-US
-  }
-  */
-});
-
-// or
-const data = await locize.getOptions();
-
-// or
-i18next.services.backendConnector.backend.getOptions(callback);
-
-// or
-const data = await i18next.services.backendConnector.backend.getOptions();
-```
-
-You can set a threshold for languages to be added to supportedLngs by setting translatedPercentageThreshold in backend options (eg: 1 = 100% translated, 0.9 = 90% translated).
-
-## SPECIAL - let the backend determine some options to improve loading
-
-You can load some information from the backend to eg. set supportedLngs for i18next just supporting languages you got in your locize project.
-
-You will get i18next options for (same as above backend.getOptions):
-
-- fallbackLng
-- supportedLngs
-- load
-
-```js
-import i18next from "i18next";
-import Locize from "i18next-locize-backend";
-
-const locize = new Locize(
-  {
-    projectId: "[PROJECTID]",
-    apiKey: "[APIKEY]",
-    version: "[VERSION]"
-    // referenceLng -> not needed as will be loaded from API
-  },
-  (err, opts, lngs) => {
-    i18next.use(locize).init({ ...opts, ...yourOptions }); // yourOptions should not include backendOptions!
-  }
-);
-```
-
-### Special usage with react-i18next without using Suspense
-
-Use `setI18n` to pass in the i18next instance before initializing:
-
-```js
-import i18n from "i18next";
-import { initReactI18next, setI18n } from "react-i18next";
-import LocizeBackend from "i18next-locize-backend";
-
-const backendOptions = {
-  projectId: "1d0aa5aa-4660-4154-b6d9-907dbef10bb3"
-};
-
-const yourOptions = {
-  debug: true,
-  interpolation: {
-    escapeValue: false
-  },
-  react: {
-    useSuspense: false
-  }
-};
-
-// this is only used if not using suspense
-i18n.options.react = yourOptions.react;
-setI18n(i18n);
-
-const backend = new LocizeBackend(backendOptions, (err, opts) => {
-  if (err) return console.error(err);
-  i18n
-    .use(backend)
-    // .use(initReactI18next) // keep this if using suspense
-    // yourOptions should not include backendOptions!
-    .init({ ...opts, ...yourOptions }, (err, t) => {
-      if (err) return console.error(err);
-    });
-});
-
-export default i18n;
-```
-
-## IMPORTANT ADVICE FOR SERVERLESS environments - AWS lambda, Google Cloud Functions, Azure Functions, etc...
-
-<font color="red">
-  <b>Please be aware</b>
-</font>
-
-Due to how serverless functions work, you cannot guarantee that a cached version of your data is available. Serverless functions are short-lived, and can shut down at any time, purging any in-memory or filesystem cache. This may be an acceptable trade-off, but sometimes it isn't acceptable.
-
-**Because of this we suggest to download the translations in your CI/CD pipeline (via [cli](https://github.com/locize/locize-cli#download-current-published-files) or via [api](https://docs.locize.com/integration/api#list-all-namespace-resources)) and package them with your serverless function.**
-
-### For example with [i18next-fs-backend](https://github.com/i18next/i18next-fs-backend)
-
-```js
-import i18next from 'i18next';
-import Backend from 'i18next-fs-backend';
-
-const backend = new Backend({
-  // path where resources get loaded from
-  loadPath: '/locales/{{lng}}/{{ns}}.json'
-});
-
-i18next
-  .use(backend)
-  .init({
-    // initImmediate: false, // setting initImediate to false, will load the resources synchronously
-    ...opts,
-    ...yourOptions
-  }); // yourOptions should not include backendOptions!
-```
-
-### or just [import/require](https://www.i18next.com/how-to/add-or-load-translations#add-on-init) your files directly
-
-```js
-import i18next from 'i18next';
-import en from './locales/en.json'
-import de from './locales/de.json'
-
-i18next
-  .init({
-    ...opts,
-    ...yourOptions,
-    resources: {
-      en,
-      de
-    }
-  });
-```
-## TypeScript
-
-To properly type the backend options, you can import the `LocizeBackendOptions` interface and use it as a generic type parameter to the i18next's `init` method, e.g.:
-
-```ts
-import i18n from 'i18next'
-import LocizeBackend, { LocizeBackendOptions } from 'i18next-locize-backend'
-
-i18n
-  .use(LocizeBackend)
-  .init<LocizeBackendOptions>({
-    backend: {
-      // locize backend options
-    },
-
-    // other i18next options
-  })
-```
+
+#### Android
+
+A map associating builds with env files is already defined in `app/build.gradle` you can modify or add environments if needed.
+
+For multiple enviroments to work you would need to change `-keep class [YOUR_PACKAGE_NAME].BuildConfig { *; }` on `proguard-rules.pro` file.
+
+#### iOS
+
+The basic idea in iOS is to have one scheme per environment file, so you can easily alternate between them.
+
+To create a new scheme:
+
+- In the Xcode menu, go to Product > Scheme > Edit Scheme
+- Click Duplicate Scheme on the bottom
+- Give it a proper name on the top left. For instance: "qa"
+- Then edit the newly created scheme to make it use a different env file. From the same "manage scheme" window:
+
+  Expand the "Build" tab on the left menu
+  - Click "Pre-actions", and under the plus sign select "New Run Script Action"
+  - Where it says "Type a script or drag a script file", type: `echo ".env.qa" > /tmp/envfile` replacing `.env.qa` with your file.
+- Also, you will need to select the executable for the new schema:
+
+  Expand the "Run" tab on the left menu
+  - Under the "Executable" dropdown select the ".app" you would like to use for that schema
+
+## Generate production version
+
+These are the steps to generate `.apk`, `.aab` and `.ipa` files
+
+### Android
+
+1. Generate an upload key
+2. Setting up gradle variables
+3. Go to the android folder
+4. Execute `./gradlew assemble[Env][BuildType]`
+
+Note: You have three options to execute the project
+`assemble:` Generates an apk that you can share with others.
+`install:` When you want to test a release build on a connected device.
+`bundle:` When you are uploading the app to the Play Store.
+
+For more info please go to https://reactnative.dev/docs/signed-apk-android
+
+### iOS
+
+1. Go to the Xcode
+2. Select the schema
+3. Select 'Any iOS device' as target
+4. Product -> Archive
+
+For more info please go to https://reactnative.dev/docs/publishing-to-app-store
+
+## Styleguide
+
+For coding styling, we decided to go with ESLint and [React Native community's styleguide](https://github.com/facebook/react-native/tree/master/packages/eslint-config-react-native-community#readme).
+
+# How to use it
+
+The idea of this section is to explain how the template composition is the best and easiest to use when you try to use well-formed, architectures, especially using redux flow.
+
+The template follows a simple and convenient exporting pattern. The folder index exposes the resources, allowing to import all from the same path.
+
+With that in mind, we are going to look at each folder to explain how to use it.
+
+## Components
+
+Components are the basic blocks of a react native application, but since we​​ aim to minimize development complexity, all the components are at the same nesting level.
+
+Another important thing is the use of propTypes to check the kind of data that your components need to work properly. If the component receives some data from others, the type of these props must be defined, and in case you need it the default value of the property too.
+
+### Static resources:
+
+To keep an application scalable and organized, the global static resources that are used in the application have to be created in a specific file.
+
+### We manage three main folders for that:
+
+- Assets: Here you can store all the images and icons that you need through the app. You have as an example the icon ic_home.png, to respond with the different device screen densities just create inside the same folder the image and all the scaled versions that you need. RN only handles x1, x2 and x3 in this case, you have.
+
+  - assets
+    - ic_home
+      - ic_home.png
+      - ic_home@2x.png
+      - ic_home@3x.png
+
+- Localization: This folder contains all the locale objects that you need to create a multilingual application. Create a file for each locale, inside define an object then maintain the nesting sorted by the screen that contains the text that you need and the text you want to show. As the last step, remember to create a reference inside the Localization.js file and add it to LocalizedStrings.
+- Theme: Here you can define all the styles that you use on different screens. To make easier the interaction of the application with device options for example you can create here assets as light and dark color palette
+
+## Redux
+
+Once the components are defined, they are tied to the management of information through the application. For this, Redux is implemented with the store-reducer-action structure as usual, however, not only the data is handled through the actions but the success and error responses are also defined by the same form.
+
+### Controllers folder and API connection handler
+
+To keep the networking layer simple, the template uses a single Axios instance in the `httpClient.js`. It uses interceptors to define common side effects for the responses.
+
+When you need communication with a service you have to create a function to manage the operation and grouping according to the kind of transaction inside a controller file, please keep all of those inside the controllers' folder.
+
+While the data transfer between the API and the app is working you must use the success and error actions that help you to catch the result of the operation. With this method, you can track the interaction through the redux store. This is useful because you can create behaviors based on those states in a quick and simple way
+
+### Redux folders
+
+4 folders divide the redux work
+
+- Store: Here you define the store shape and you can configure the persistReducer and middlewares.
+- Actions: Remember to create the file and the corresponding test for each action classification. Here you define actions for success and error scenarios.
+- Reducers: You have the error and success reducers by default. Create the other classifications and try to keep simple each file. Here you modify the store.
+- Selectors: Create one file for each action classification. Here you define what part of the store you need to see in your interface.
+
+## Screens
+
+In this folder, you have the main objects to apply the composition architecture. Just create a folder for each screen you have in your application, call all the components and static resources you need to render the scene and finally use the corresponding hooks to interact with redux and create behaviors depending on the store.
+
+To keep the structure, extract the styles from the main file and place it in a {namefile.styles.js} do the same for the set of tests needed for each screen with the file {namefile.test.js}
